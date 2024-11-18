@@ -36,7 +36,31 @@ dot:
 
 loop_start:
     bge t1, a2, loop_end
-    # TODO: Add your own implementation
+    # TODO: Add your own implementation    
+    lw t2, 0(a0)
+    lw t3, 0(a1)
+    addi t1, t1, 1
+    mv t4, a3
+    mv t5, a4
+
+skip_distance_1:
+    beqz t4, skip_distance_2
+    addi a0, a0, 4
+    addi t4, t4, -1
+    j skip_distance_1
+
+skip_distance_2:
+    beqz t5, d_loop
+    addi a1, a1, 4
+    addi t5, t5, -1
+    j skip_distance_2
+
+d_loop:
+    beqz t3, loop_start
+    add t0, t2, t0
+    addi t3, t3, -1
+    j d_loop
+
 
 loop_end:
     mv a0, t0

@@ -23,14 +23,31 @@
 # =================================================================
 argmax:
     li t6, 1
-    blt a1, t6, handle_error
-
-    lw t0, 0(a0)
+    blt a1, t6, handle_error   
 
     li t1, 0
-    li t2, 1
+    li t2, 0
 loop_start:
-    # TODO: Add your own implementation
+    # TODO: Add your own implementation    
+    beqz a1, finished    
+    addi a1, a1, -1
+    lw t0, 0(a0)
+    bge t1, t0, not_the_max #if t1 >= t0, t0 is not the max
+    mv t1, t0
+    mv t3, t2
+
+    addi t2, t2, 1
+    addi a0, a0, 4
+    j loop_start
+
+not_the_max:
+    addi t2, t2, 1
+    addi a0, a0, 4
+    j loop_start
+
+finished:
+    mv a0, t3
+    ret
 
 handle_error:
     li a0, 36

@@ -29,6 +29,20 @@ relu:
 
 loop_start:
     # TODO: Add your own implementation
+    beqz a1, finished
+    addi a1, a1, -1
+    lw t0, 0(a0)
+    blt t0, t1, to_zero
+    addi a0, a0, 4
+    j loop_start
+to_zero:
+    sw t1, 0(a0)
+    addi a0, a0, 4
+    j loop_start
+
+finished:
+    li a0, 0
+    j exit
 
 error:
     li a0, 36          
